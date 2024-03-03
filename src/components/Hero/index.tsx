@@ -18,7 +18,7 @@ export default function Hero() {
 
         <p className="bg-red-100 max-w-xl">
           Transfer your library between different music services. Currently
-          supports Spotify and Youtube with more to come!
+          supports Spotify and YouTube with more to come!
         </p>
 
         <Link href="/transfer">
