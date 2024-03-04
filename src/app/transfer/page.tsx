@@ -1,55 +1,94 @@
 "use client";
 import axios from "axios";
-import Link from "next/link";
+import Button from "@/components/Button";
+import { useState } from "react";
+import Image from "next/image";
+
+type Playlist = {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+};
+
+type PlaylistGridProps = {
+  playlists: Playlist[];
+};
+
+type PlaylistCardProps = {
+  playlist: Playlist;
+};
+
+function PlaylistCard(props: PlaylistCardProps) {
+  const { playlist } = props;
+
+  return (
+    <div className="border border-black p-2">
+      <Image
+        src={playlist.image}
+        alt={`${playlist.name} Image`}
+        width={160}
+        height={160}
+      />
+      <h1>{playlist.name}</h1>
+    </div>
+  );
+}
+
+function PlaylistGrid(props: PlaylistGridProps) {
+  return (
+    <div className="grid grid-cols-4 gap-2 w-2/3 bg-yellow-100">
+      {props.playlists.map((playlist) => (
+        <PlaylistCard key={playlist.id} playlist={playlist} />
+      ))}
+    </div>
+  );
+}
 
 export default function Transfer() {
-  const printStatus = async () => {
-    try {
-      const res = await axios.get("https://localhost:8080/oauth/status", {
-        withCredentials: true,
-      });
-      console.log(res.data);
-    } catch (err) {
-      // console.log(err);
-    }
-  };
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
-  const printSession = async () => {
+  const getSpotifyPlaylists = async () => {
     try {
-      const res = await axios.get("https://localhost:8080/session", {
+      const res = await axios.get("https://localhost:8080/playlists/spotify", {
         withCredentials: true,
       });
       console.log(res.data);
+      setPlaylists(res.data.playlists);
     } catch (err) {
       // console.log(err);
     }
   };
 
   return (
-    <main>
-      <h2>Copy your Spotify playlists onto YouTube in 4 easy steps:</h2>
+    <section
+      id="home"
+      className="w-full min-h-screen flex justify-center bg-red-100"
+    >
+      <div className="flex flex-col items-center gap-8 w-full bg-green-100">
+        <h2>Copy your Spotify playlists onto YouTube in 4 easy steps:</h2>
 
-      <h3>Step 1: Sign into YouTube using your Google account</h3>
+        <h3>Step 1: Sign into YouTube using your Google account</h3>
 
-      <Link href={"https://localhost:8080/oauth/youtube/login"}>
-        <button>Sign in with Google</button>
-      </Link>
+        <Button
+          href="https://localhost:8080/oauth/youtube/login"
+          text="Sign in with Google"
+        />
 
-      <h3>Step 2: Sign into your Spotify account</h3>
-      <a href="https://localhost:8080/oauth/spotify/login">
-        <button>Sign in with Spotify "a href"</button>
-      </a>
+        <h3>Step 2: Sign into your Spotify account</h3>
+        <Button
+          href="https://localhost:8080/oauth/spotify/login"
+          text="Sign in with Spotify"
+        />
 
-      <br></br>
-      <button onClick={printStatus}>Print status</button>
+        <h3>Step 3: Select which playlists you want to copy</h3>
+        <Button text="Get Spotify Playlists" onClick={getSpotifyPlaylists} />
 
-      <br></br>
-      <button onClick={printSession}>Print session</button>
+        <PlaylistGrid playlists={playlists} />
 
-      <h3>Step 3: Select which playlists you want to copy</h3>
-
-      <h3>Step 4: Click "Copy Playlists"</h3>
-      <button>Copy Playlists</button>
-    </main>
+        <h3>Step 4: Click "Copy Playlists"</h3>
+        <Button text="Copy Playlists" />
+      </div>
+    </section>
   );
 }

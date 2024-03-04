@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Button from "../Button";
 
 export default function Hero() {
   return (
@@ -21,11 +21,7 @@ export default function Hero() {
           supports Spotify and YouTube with more to come!
         </p>
 
-        <Link href="/transfer">
-          <button className="bg-blue-600 px-8 py-4 text-lg leading-none rounded-full text-white">
-            Let's get it started
-          </button>
-        </Link>
+        <Button href="/transfer" text="Let's get it started" />
       </div>
     </section>
   );
