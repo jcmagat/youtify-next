@@ -1,4 +1,7 @@
 "use client";
+import { useState, useEffect } from "react";
+import { MdDarkMode } from "react-icons/md";
+import { MdLightMode } from "react-icons/md";
 
 import Link from "next/link";
 
@@ -12,9 +15,45 @@ function Logo() {
 }
 
 export default function Navbar() {
+  // TODO: initialize with localStorage without error
+  const [theme, setTheme] = useState("light");
+
+  const toggleMode = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  useEffect(() => {
+    document.documentElement.setAttribute("theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // Scroll styling
+  const [scrollClasses, setScrollClasses] = useState("");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isAtTop = !(window.scrollY || document.documentElement.scrollTop);
+
+      if (isAtTop) {
+        setScrollClasses("");
+      } else {
+        setScrollClasses("shadow-xl brightness-105");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <header>
-      <nav className="fixed w-full h-24 shadow-xl bg-white">
+      <nav
+        className={`bg-primary text-secondary fixed w-full h-24 ${scrollClasses}`}
+      >
         <div className="flex justify-between items-center h-full w-full px-8 2xl:px-16">
           <Logo />
 
@@ -28,6 +67,11 @@ export default function Navbar() {
             <Link href="/help">
               <li className="font-bold hover:border-b">Help</li>
             </Link>
+            <li>
+              <button onClick={toggleMode}>
+                {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
+              </button>
+            </li>
           </ul>
         </div>
       </nav>

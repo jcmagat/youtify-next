@@ -65,7 +65,7 @@ export default function Transfer() {
       id="home"
       className="w-full min-h-screen flex justify-center bg-red-100"
     >
-      <div className="flex flex-col items-center gap-8 w-full bg-green-100">
+      <div className="flex flex-col items-center gap-8 pt-36 bg-green-100">
         <h2>Copy your Spotify playlists onto YouTube in 4 easy steps:</h2>
 
         <h3>Step 1: Sign into YouTube using your Google account</h3>
