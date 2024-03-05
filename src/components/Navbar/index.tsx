@@ -16,15 +16,19 @@ function Logo() {
 
 export default function Navbar() {
   // TODO: initialize with localStorage without error
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("");
 
   const toggleMode = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   useEffect(() => {
+    setTheme(localStorage.getItem("theme") ?? "");
+  }, []);
+
+  useEffect(() => {
     document.documentElement.setAttribute("theme", theme);
-    localStorage.setItem("theme", theme);
+    if (theme) localStorage.setItem("theme", theme);
   }, [theme]);
 
   // Scroll styling
@@ -52,7 +56,7 @@ export default function Navbar() {
   return (
     <header>
       <nav
-        className={`bg-primary text-secondary fixed w-full h-24 ${scrollClasses}`}
+        className={`bg-primary text-secondary fixed w-full h-24 z-20 ${scrollClasses}`}
       >
         <div className="flex justify-between items-center h-full w-full px-8 2xl:px-16">
           <Logo />
