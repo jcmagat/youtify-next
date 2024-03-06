@@ -1,21 +1,30 @@
 "use client";
+import { useState } from "react";
 import useTransferSteps from "./useTransferSteps";
 import SourceStep from "./SourceStep";
 import PlaylistStep from "./PlaylistStep";
 import DestinationStep from "./DestinationStep";
-import { Playlist } from "./types";
+import { TransferData } from "./types";
 
-const INITIAL_DATA = {
+const INITIAL_DATA: TransferData = {
   source: "",
   destination: "",
-  playlists: [] as Playlist[],
+  playlists: [],
 };
 
 export default function Transfer() {
+  const [data, setData] = useState(INITIAL_DATA);
+
+  const updateData = (updatedData: Partial<TransferData>) => {
+    setData((prev) => {
+      return { ...prev, ...updatedData };
+    });
+  };
+
   const { steps, currStepIndex, currStep, next, back } = useTransferSteps([
-    <SourceStep />,
+    <SourceStep updateData={updateData} />,
     <PlaylistStep />,
-    <DestinationStep />,
+    <DestinationStep updateData={updateData} />,
   ]);
 
   const titles = [
@@ -39,6 +48,10 @@ export default function Transfer() {
         </div>
 
         {currStep}
+
+        {/*TODO: remove, only for testing*/}
+        <p>{data.source}</p>
+        <p>{data.destination}</p>
       </div>
     </section>
   );

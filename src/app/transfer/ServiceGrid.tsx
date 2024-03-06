@@ -1,33 +1,58 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { TransferData } from "./types";
 
-type ServiceCardProps = {
-  service: string;
+enum Service {
+  Spotify = "spotify",
+  YouTube = "youtube",
+}
+
+type ServiceGridProps = {
+  updateKey: keyof TransferData;
+  updateData: (updatedData: Partial<TransferData>) => void;
 };
 
-function ServiceCard(props: ServiceCardProps) {
-  const { service } = props;
+type ServiceCardProps = ServiceGridProps & {
+  service: Service;
+};
+
+function ServiceCard({ service, updateKey, updateData }: ServiceCardProps) {
+  const clickCard = () => {
+    updateData({ [updateKey]: service });
+  };
 
   return (
-    <Link href={`https://localhost:8080/oauth/${service}/login`}>
-      <button className="bg-primary brightness-150 flex justify-center h-36 w-36 rounded-3xl">
-        <Image
-          src={`/assets/${service}.svg`}
-          alt={`${service} image`}
-          height={34}
-          width={34 * (559 / 168)}
-        />
-      </button>
-    </Link>
+    // <Link href={`https://localhost:8080/oauth/${service}/login`}>
+    <button
+      className="bg-primary brightness-150 flex justify-center h-36 w-36 rounded-3xl"
+      onClick={clickCard}
+    >
+      <Image
+        src={`/assets/${service}.svg`}
+        alt={`${service} logo`}
+        height={34}
+        width={34 * (559 / 168)}
+      />
+    </button>
+    // </Link>
   );
 }
 
-export default function ServiceGrid() {
+export default function ServiceGrid({
+  updateKey,
+  updateData,
+}: ServiceGridProps) {
   return (
     <div className="grid grid-cols-2 gap-8 pt-8">
-      <ServiceCard service="spotify" />
-      <ServiceCard service="youtube" />
+      {Object.keys(Service).map((serviceKey) => (
+        <ServiceCard
+          key={serviceKey}
+          service={Service[serviceKey as keyof typeof Service]}
+          updateKey={updateKey}
+          updateData={updateData}
+        />
+      ))}
     </div>
   );
 }

@@ -5,3 +5,9 @@ export type Playlist = {
   image?: string;
   tracks?: string[]; // TODO: make required
 };
+
+export type TransferData = {
+  source: string;
+  destination: string;
+  playlists: Playlist[];
+};

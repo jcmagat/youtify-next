@@ -46,24 +46,24 @@ function PlaylistGrid(props: PlaylistGridProps) {
 export default function PlaylistStep() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
-  useEffect(() => {
-    const getSpotifyPlaylists = async () => {
-      try {
-        const res = await axios.get(
-          "https://localhost:8080/playlists/spotify",
-          {
-            withCredentials: true,
-          }
-        );
-        console.log(res.data);
-        setPlaylists(res.data.playlists);
-      } catch (err) {
-        // console.log(err);
-      }
-    };
+  // useEffect(() => {
+  //   const getSpotifyPlaylists = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         "https://localhost:8080/playlists/spotify",
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       console.log(res.data);
+  //       setPlaylists(res.data.playlists);
+  //     } catch (err) {
+  //       // console.log(err);
+  //     }
+  //   };
 
-    getSpotifyPlaylists();
-  }, []);
+  //   getSpotifyPlaylists();
+  // }, []);
 
   return (
     <>
