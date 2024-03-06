@@ -1,6 +1,6 @@
 import { ReactElement, useState } from "react";
 
-export default function useMultistepForm(steps: ReactElement[]) {
+export default function useTransferSteps(steps: ReactElement[]) {
   const [currStepIndex, setCurrStepIndex] = useState(0);
 
   const next = () => {

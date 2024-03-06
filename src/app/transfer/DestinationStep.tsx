@@ -1,5 +1,5 @@
 import ServiceGrid from "./ServiceGrid";
 
-export default function DestinationForm() {
+export default function DestinationStep() {
   return <ServiceGrid />;
 }

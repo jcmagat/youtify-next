@@ -43,7 +43,7 @@ function PlaylistGrid(props: PlaylistGridProps) {
   );
 }
 
-export default function PlaylistForm() {
+export default function PlaylistStep() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   useEffect(() => {

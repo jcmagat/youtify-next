@@ -1,21 +1,21 @@
 "use client";
-import useMultistepForm from "./useMultistepForm";
-import SourceForm from "./SourceForm";
-import PlaylistForm from "./PlaylistForm";
-import DestinationForm from "./DestinationForm";
+import useTransferSteps from "./useTransferSteps";
+import SourceStep from "./SourceStep";
+import PlaylistStep from "./PlaylistStep";
+import DestinationStep from "./DestinationStep";
 import { Playlist } from "./types";
 
-const INITIAL_FORM_STATE = {
+const INITIAL_DATA = {
   source: "",
   destination: "",
   playlists: [] as Playlist[],
 };
 
 export default function Transfer() {
-  const { steps, currStepIndex, currStep, next, back } = useMultistepForm([
-    <SourceForm />,
-    <PlaylistForm />,
-    <DestinationForm />,
+  const { steps, currStepIndex, currStep, next, back } = useTransferSteps([
+    <SourceStep />,
+    <PlaylistStep />,
+    <DestinationStep />,
   ]);
 
   const titles = [
