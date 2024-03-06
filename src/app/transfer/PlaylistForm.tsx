@@ -2,14 +2,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
-import Button from "../Button";
-
-type Playlist = {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-};
+import Button from "@/components/Button";
+import { Playlist } from "./types";
 
 type PlaylistGridProps = {
   playlists: Playlist[];
@@ -24,28 +18,32 @@ function PlaylistCard(props: PlaylistCardProps) {
 
   return (
     <div className="border border-black p-2">
-      <Image
-        src={playlist.image}
-        alt={`${playlist.name} Image`}
-        width={160}
-        height={160}
-      />
+      {playlist.image && (
+        <Image
+          src={playlist.image}
+          alt={`${playlist.name} Image`}
+          width={160}
+          height={160}
+        />
+      )}
       <h1>{playlist.name}</h1>
     </div>
   );
 }
 
 function PlaylistGrid(props: PlaylistGridProps) {
+  const { playlists } = props;
+
   return (
     <div className="grid grid-cols-4 gap-2 w-2/3 bg-yellow-100">
-      {props.playlists.map((playlist) => (
+      {playlists.map((playlist) => (
         <PlaylistCard key={playlist.id} playlist={playlist} />
       ))}
     </div>
   );
 }
 
-export default function Step3() {
+export default function PlaylistForm() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   useEffect(() => {
@@ -68,13 +66,9 @@ export default function Step3() {
   }, []);
 
   return (
-    <div className="bg-primary text-secondary flex flex-col items-center gap-4">
-      <h1 className="text-5xl font-bold">
-        Select playlists you want to transfer
-      </h1>
-      <p>STEP 3/4</p>
+    <>
       <PlaylistGrid playlists={playlists} />
-      <Button text="Transfer" />
-    </div>
+      <Button text="Select destination" />
+    </>
   );
 }
