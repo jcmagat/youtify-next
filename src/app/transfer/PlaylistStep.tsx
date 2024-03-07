@@ -3,72 +3,94 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Button from "@/components/Button";
-import { Playlist } from "./types";
+import { Playlist, Track } from "./types";
 
-type PlaylistGridProps = {
+type PlaylistListProps = {
   playlists: Playlist[];
 };
 
-type PlaylistCardProps = {
-  playlist: Playlist;
+type TracksListProps = {
+  tracks?: Track[];
 };
 
-function PlaylistCard(props: PlaylistCardProps) {
-  const { playlist } = props;
-
+function TracksList({ tracks }: TracksListProps) {
   return (
-    <div className="border border-black p-2">
-      {playlist.image && (
-        <Image
-          src={playlist.image}
-          alt={`${playlist.name} Image`}
-          width={160}
-          height={160}
-        />
-      )}
-      <h1>{playlist.name}</h1>
-    </div>
+    <ul>
+      {tracks?.map((track) => (
+        <li key={track.id}>
+          <div className="flex items-center gap-8 py-2 pl-8 border border-red-500">
+            {track.image && (
+              <Image
+                src={track.image}
+                alt={`${track.name} Image`}
+                width={64}
+                height={64}
+              />
+            )}
+
+            <h1>{track.name}</h1>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
 
-function PlaylistGrid(props: PlaylistGridProps) {
-  const { playlists } = props;
-
+function PlaylistList({ playlists }: PlaylistListProps) {
   return (
-    <div className="grid grid-cols-4 gap-2 w-2/3 bg-yellow-100">
+    <ul className="flex flex-col gap-8">
       {playlists.map((playlist) => (
-        <PlaylistCard key={playlist.id} playlist={playlist} />
+        <li key={playlist.id} className="flex flex-col border border-blue-200">
+          <div className="flex items-center gap-8 border border-black">
+            {playlist.image && (
+              <Image
+                src={playlist.image}
+                alt={`${playlist.name} Image`}
+                width={64}
+                height={64}
+              />
+            )}
+
+            <div>
+              <h1>{playlist.name}</h1>
+              <p>{`${playlist.tracks?.length} tracks`}</p>
+            </div>
+          </div>
+
+          <TracksList tracks={playlist.tracks} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
 export default function PlaylistStep() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
-  // useEffect(() => {
-  //   const getSpotifyPlaylists = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         "https://localhost:8080/playlists/spotify",
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       console.log(res.data);
-  //       setPlaylists(res.data.playlists);
-  //     } catch (err) {
-  //       // console.log(err);
-  //     }
-  //   };
+  // TODO: move to page.tsx
+  useEffect(() => {
+    const getSpotifyPlaylists = async () => {
+      try {
+        const res = await axios.get(
+          "https://localhost:8080/playlists/spotify",
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(res.data);
+        setPlaylists(res.data.playlists);
+      } catch (err) {
+        // console.log(err);
+      }
+    };
 
-  //   getSpotifyPlaylists();
-  // }, []);
+    getSpotifyPlaylists();
+  }, []);
 
   return (
-    <>
-      <PlaylistGrid playlists={playlists} />
+    <div>
+      <PlaylistList playlists={playlists} />
       <Button text="Select destination" />
-    </>
+    </div>
   );
 }

@@ -34,11 +34,8 @@ export default function Transfer() {
   ];
 
   return (
-    <section
-      id="home"
-      className="w-full min-h-screen flex justify-center pt-36 bg-red-100"
-    >
-      <div className="bg-primary text-secondary flex flex-col items-center gap-4">
+    <section id="home" className="w-full flex justify-center">
+      <div className="flex flex-col items-center gap-4 w-full max-w-5xl bg-green-300">
         <h1 className="text-5xl font-bold">{titles[currStepIndex]}</h1>
 
         <div className="flex gap-4">
