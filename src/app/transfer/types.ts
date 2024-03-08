@@ -1,15 +1,15 @@
 export type Track = {
-  id?: string;
+  id: string;
   image?: string;
   name: string;
 };
 
 export type Playlist = {
-  id?: string;
+  id: string;
   name: string;
   description: string;
   image?: string;
-  tracks?: Track[]; // TODO: make required
+  tracks: Track[];
 };
 
 export type TransferData = {
