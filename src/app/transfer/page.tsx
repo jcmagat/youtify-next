@@ -22,9 +22,9 @@ export default function Transfer() {
   };
 
   const { steps, currStepIndex, currStep, next, back } = useTransferSteps([
-    <SourceStep updateData={updateData} />,
-    <PlaylistStep />,
-    <DestinationStep updateData={updateData} />,
+    <SourceStep key={1} updateData={updateData} />,
+    <PlaylistStep key={2} />,
+    <DestinationStep key={3} updateData={updateData} />,
   ]);
 
   const titles = [

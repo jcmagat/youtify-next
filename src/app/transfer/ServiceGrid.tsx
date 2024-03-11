@@ -1,6 +1,6 @@
 "use client";
+import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import { TransferData } from "./types";
 
 enum Service {
@@ -18,14 +18,32 @@ type ServiceCardProps = ServiceGridProps & {
 };
 
 function ServiceCard({ service, updateKey, updateData }: ServiceCardProps) {
-  const clickCard = () => {
+  const clickCard = async () => {
     updateData({ [updateKey]: service });
+
+    try {
+      const res = await axios.get(
+        `https://localhost:8080/oauth/${service}/login`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      const auth_url = res.data.auth_url;
+      if (auth_url)
+        window.open(
+          res.data.auth_url,
+          "oauth",
+          "popup=true,width=500,height=720"
+        );
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    // <Link href={`https://localhost:8080/oauth/${service}/login`}>
     <button
-      className="bg-primary brightness-150 flex justify-center h-36 w-36 rounded-3xl"
+      className="bg-primary brightness-150 flex justify-center items-center h-36 w-36 rounded-3xl"
       onClick={clickCard}
     >
       <Image
@@ -35,7 +53,6 @@ function ServiceCard({ service, updateKey, updateData }: ServiceCardProps) {
         width={34 * (559 / 168)}
       />
     </button>
-    // </Link>
   );
 }
 
