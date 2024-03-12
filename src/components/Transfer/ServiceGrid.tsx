@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
-import { TransferData } from "./types";
+import { TransferData } from "@/types/transfer";
 
 enum Service {
   Spotify = "spotify",

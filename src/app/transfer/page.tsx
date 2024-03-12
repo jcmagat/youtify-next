@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import useTransferSteps from "./useTransferSteps";
-import SourceStep from "./SourceStep";
-import PlaylistStep from "./PlaylistStep";
-import DestinationStep from "./DestinationStep";
-import ConfirmTransferStep from "./ConfirmTransferStep";
-import { TransferData } from "./types";
+import { TransferData } from "@/types/transfer";
+import useTransferSteps from "@/hooks/useTransferSteps";
+import SourceStep from "@/components/Transfer/SourceStep";
+import PlaylistStep from "@/components/Transfer/PlaylistStep";
+import DestinationStep from "@/components/Transfer/DestinationStep";
+import ConfirmTransferStep from "@/components/Transfer/ConfirmTransferStep";
 
 const INITIAL_DATA: TransferData = {
   source: "",

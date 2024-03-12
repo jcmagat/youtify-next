@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import axios from "axios";
-import { TransferData } from "./types";
+import { TransferData } from "@/types/transfer";
 
 export default function ConfirmTransferStep({
   source,

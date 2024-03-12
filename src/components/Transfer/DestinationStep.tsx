@@ -1,5 +1,5 @@
 import ServiceGrid from "./ServiceGrid";
-import { TransferData } from "./types";
+import { TransferData } from "@/types/transfer";
 
 type DestinationStepProps = {
   updateData: (data: Partial<TransferData>) => void;
