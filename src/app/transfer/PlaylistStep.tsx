@@ -4,40 +4,53 @@ import axios from "axios";
 import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa";
 import Button from "@/components/Button";
-import { Playlist, Track } from "./types";
+import { Playlist, TransferData } from "./types";
+
+type PlaylistStepProps = TransferData & {
+  updateData: (data: Partial<TransferData>) => void;
+};
 
 type PlaylistsListProps = {
   playlists: Playlist[];
-  checkedPlaylists: string[];
+  checkedPlaylistIds: string[];
   checkedTrackIds: string[];
   handlePlaylistCheckboxChange: (playlistId: string) => void;
   handleTrackCheckboxChange: (trackId: string) => void;
+  uniquePlaylistTrackId: (playlistId: string, trackId: string) => string;
 };
 
 type TracksListProps = {
-  tracks: Track[];
   disabled: boolean;
+  playlist: Playlist;
   checkedTrackIds: string[];
   handleTrackCheckboxChange: (trackId: string) => void;
+  uniquePlaylistTrackId: (playlistId: string, trackId: string) => string;
 };
 
 function TracksList({
-  tracks,
   disabled,
+  playlist,
   checkedTrackIds,
   handleTrackCheckboxChange,
+  uniquePlaylistTrackId,
 }: TracksListProps) {
   return (
     <ul
       className={`flex flex-col gap-2 pt-2 
         ${disabled ? "pointer-events-none brightness-75" : ""}`}
     >
-      {tracks?.map((track) => (
+      {playlist.tracks?.map((track) => (
         <li key={track.id} className="flex items-center gap-6 pl-8">
           <input
             type="checkbox"
-            checked={checkedTrackIds.includes(track.id)}
-            onChange={() => handleTrackCheckboxChange(track.id)}
+            checked={checkedTrackIds.includes(
+              uniquePlaylistTrackId(playlist.id, track.id)
+            )}
+            onChange={() =>
+              handleTrackCheckboxChange(
+                uniquePlaylistTrackId(playlist.id, track.id)
+              )
+            }
           />
 
           {track.image && (
@@ -58,11 +71,19 @@ function TracksList({
 
 function PlaylistsList({
   playlists,
-  checkedPlaylists,
+  checkedPlaylistIds,
   checkedTrackIds,
   handlePlaylistCheckboxChange,
   handleTrackCheckboxChange,
+  uniquePlaylistTrackId,
 }: PlaylistsListProps) {
+  // TODO: individualize this to each TracksList
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    setIsCollapsed((prev) => !prev);
+  };
+
   return (
     <ul className="flex flex-col gap-4">
       {playlists.map((playlist) => (
@@ -70,7 +91,7 @@ function PlaylistsList({
           <div className="flex items-center gap-6">
             <input
               type="checkbox"
-              checked={checkedPlaylists.includes(playlist.id)}
+              checked={checkedPlaylistIds.includes(playlist.id)}
               onChange={() => handlePlaylistCheckboxChange(playlist.id)}
             />
 
@@ -89,17 +110,23 @@ function PlaylistsList({
                 <p>{`${playlist.tracks?.length} tracks`}</p>
               </div>
 
-              <button>
+              <button
+                className={`transition duration-150 ${
+                  isCollapsed ? "rotate-90" : ""
+                }`}
+                onClick={toggleCollapse}
+              >
                 <FaAngleDown />
               </button>
             </div>
           </div>
 
           <TracksList
-            disabled={!checkedPlaylists.includes(playlist.id)}
-            tracks={playlist.tracks}
+            disabled={!checkedPlaylistIds.includes(playlist.id)}
+            playlist={playlist}
             checkedTrackIds={checkedTrackIds}
             handleTrackCheckboxChange={handleTrackCheckboxChange}
+            uniquePlaylistTrackId={uniquePlaylistTrackId}
           />
         </li>
       ))}
@@ -107,7 +134,10 @@ function PlaylistsList({
   );
 }
 
-export default function PlaylistStep() {
+export default function PlaylistStep({
+  source,
+  updateData,
+}: PlaylistStepProps) {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   const [checkedPlaylistIds, setCheckedPlaylistIds] = useState<string[]>([]);
@@ -117,7 +147,7 @@ export default function PlaylistStep() {
     const getSpotifyPlaylists = async () => {
       try {
         const res = await axios.get(
-          "https://localhost:8080/playlists/spotify",
+          `https://localhost:8080/playlists/${source}`,
           {
             withCredentials: true,
           }
@@ -132,10 +162,22 @@ export default function PlaylistStep() {
     getSpotifyPlaylists();
   }, []);
 
+  const uniquePlaylistTrackId = (
+    playlistId: string,
+    trackId: string
+  ): string => {
+    return `${playlistId}-${trackId}`;
+  };
+
   useEffect(() => {
     setCheckedPlaylistIds(playlists.map((playlist) => playlist.id));
+
     setCheckedTrackIds(
-      playlists.flatMap((playlist) => playlist.tracks.map((track) => track.id))
+      playlists.flatMap((playlist) =>
+        playlist.tracks.map((track) =>
+          uniquePlaylistTrackId(playlist.id, track.id)
+        )
+      )
     );
   }, [playlists]);
 
@@ -156,26 +198,29 @@ export default function PlaylistStep() {
   };
 
   const handleButtonClick = () => {
-    setPlaylists((prev) =>
-      prev
+    updateData({
+      playlists: playlists
         .filter((playlist) => checkedPlaylistIds.includes(playlist.id))
         .map((playlist) => ({
           ...playlist,
           tracks: playlist.tracks.filter((track) =>
-            checkedTrackIds.includes(track.id)
+            checkedTrackIds.includes(
+              uniquePlaylistTrackId(playlist.id, track.id)
+            )
           ),
-        }))
-    );
+        })),
+    });
   };
 
   return (
     <div className="relative">
       <PlaylistsList
         playlists={playlists}
-        checkedPlaylists={checkedPlaylistIds}
+        checkedPlaylistIds={checkedPlaylistIds}
         checkedTrackIds={checkedTrackIds}
         handlePlaylistCheckboxChange={handlePlaylistCheckboxChange}
         handleTrackCheckboxChange={handleTrackCheckboxChange}
+        uniquePlaylistTrackId={uniquePlaylistTrackId}
       />
 
       <Button

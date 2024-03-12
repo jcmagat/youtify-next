@@ -4,6 +4,7 @@ import useTransferSteps from "./useTransferSteps";
 import SourceStep from "./SourceStep";
 import PlaylistStep from "./PlaylistStep";
 import DestinationStep from "./DestinationStep";
+import ConfirmTransferStep from "./ConfirmTransferStep";
 import { TransferData } from "./types";
 
 const INITIAL_DATA: TransferData = {
@@ -23,14 +24,16 @@ export default function Transfer() {
 
   const { steps, currStepIndex, currStep, next, back } = useTransferSteps([
     <SourceStep key={1} updateData={updateData} />,
-    <PlaylistStep key={2} />,
+    <PlaylistStep key={2} {...data} updateData={updateData} />,
     <DestinationStep key={3} updateData={updateData} />,
+    <ConfirmTransferStep key={4} {...data} />,
   ]);
 
   const titles = [
     "Select the source",
     "Select playlists",
     "Select the destination",
+    "Transfer playlists",
   ];
 
   return (
