@@ -23,9 +23,9 @@ export default function Transfer() {
   };
 
   const { steps, currStepIndex, currStep, next, back } = useTransferSteps([
-    <SourceStep key={1} updateData={updateData} />,
+    <SourceStep key={1} {...data} updateData={updateData} />,
     <PlaylistStep key={2} {...data} updateData={updateData} />,
-    <DestinationStep key={3} updateData={updateData} />,
+    <DestinationStep key={3} {...data} updateData={updateData} />,
     <ConfirmTransferStep key={4} {...data} />,
   ]);
 
@@ -37,7 +37,7 @@ export default function Transfer() {
   ];
 
   return (
-    <section id="home" className="w-full flex justify-center">
+    <section id="home" className="w-full flex justify-center min-h-[75vh]">
       <div className="flex flex-col items-center gap-4 w-full max-w-5xl py-10 bg-primarylight rounded-3xl shadow-xl">
         <h1 className="text-5xl font-bold">{titles[currStepIndex]}</h1>
 

@@ -26,7 +26,13 @@ export default function ConfirmTransferStep({
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center gap-2">
+      <h1>
+        Transfering from {source} to {destination}
+      </h1>
+
+      <p>{playlists.length} playlists</p>
+
       <Button onClick={transfer} text="Transfer" />
     </div>
   );
