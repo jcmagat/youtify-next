@@ -22,17 +22,26 @@ export default function PlaylistsList({
   handleTrackCheckboxChange,
   uniquePlaylistTrackId,
 }: PlaylistsListProps) {
-  // TODO: individualize this to each TracksList
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [collapsedDict, setCollapsedDict] = useState(
+    playlists.reduce<Record<string, boolean>>(
+      (acc, playlist) => ((acc[playlist.id] = false), acc),
+      {}
+    )
+  );
 
-  const toggleCollapse = () => {
-    setIsCollapsed((prev) => !prev);
+  const toggleCollapse = (playlistId: string) => {
+    setCollapsedDict((prev) => {
+      return { ...prev, [playlistId]: !prev[playlistId] };
+    });
   };
 
   return (
     <ul className="flex flex-col gap-4">
       {playlists.map((playlist) => (
-        <li key={playlist.id} className="flex flex-col border border-black">
+        <li
+          key={playlist.id}
+          className="flex flex-col px-4 pb-4 [&:not(:last-child)]:border-b border-secondary"
+        >
           <div className="flex items-center gap-6">
             <input
               type="checkbox"
@@ -56,10 +65,9 @@ export default function PlaylistsList({
               </div>
 
               <button
-                className={`transition duration-150 ${
-                  isCollapsed ? "rotate-90" : ""
-                }`}
-                onClick={toggleCollapse}
+                className={`transition-transform duration-200 
+                ${collapsedDict[playlist.id] ? "rotate-90" : ""}`}
+                onClick={() => toggleCollapse(playlist.id)}
               >
                 <FaAngleDown />
               </button>
@@ -67,6 +75,7 @@ export default function PlaylistsList({
           </div>
 
           <TracksList
+            collapsed={collapsedDict[playlist.id]}
             disabled={!checkedPlaylistIds.includes(playlist.id)}
             playlist={playlist}
             checkedTrackIds={checkedTrackIds}

@@ -1,12 +1,7 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
-import { TransferData } from "@/types/transfer";
-
-enum Service {
-  Spotify = "spotify",
-  YouTube = "youtube",
-}
+import { TransferData, Service } from "@/types/transfer";
 
 type ServiceGridProps = {
   updateKey: keyof TransferData;
@@ -43,7 +38,7 @@ function ServiceCard({ service, updateKey, updateData }: ServiceCardProps) {
 
   return (
     <button
-      className="bg-primary brightness-150 flex justify-center items-center h-36 w-36 rounded-3xl"
+      className="bg-primary brightness-150 flex justify-center items-center h-36 w-36 rounded-3xl shadow-lg"
       onClick={clickCard}
     >
       <Image
@@ -62,14 +57,17 @@ export default function ServiceGrid({
 }: ServiceGridProps) {
   return (
     <div className="grid grid-cols-2 gap-8 pt-8">
-      {Object.keys(Service).map((serviceKey) => (
-        <ServiceCard
-          key={serviceKey}
-          service={Service[serviceKey as keyof typeof Service]}
-          updateKey={updateKey}
-          updateData={updateData}
-        />
-      ))}
+      {Object.keys(Service).map(
+        (serviceKey) =>
+          serviceKey !== "None" && (
+            <ServiceCard
+              key={serviceKey}
+              service={Service[serviceKey as keyof typeof Service]}
+              updateKey={updateKey}
+              updateData={updateData}
+            />
+          )
+      )}
     </div>
   );
 }

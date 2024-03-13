@@ -1,3 +1,9 @@
+export enum Service {
+  None = "",
+  Spotify = "spotify",
+  YouTube = "youtube",
+}
+
 export type Track = {
   id: string;
   image?: string;
@@ -13,7 +19,7 @@ export type Playlist = {
 };
 
 export type TransferData = {
-  source: string;
-  destination: string;
+  source: Service;
+  destination: Service;
   playlists: Playlist[];
 };

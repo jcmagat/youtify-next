@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <main className="bg-primary text-secondary py-40">{children}</main>
+        <main className="bg-primary text-secondary py-32">{children}</main>
         <Footer />
       </body>
     </html>

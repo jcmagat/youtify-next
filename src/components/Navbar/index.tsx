@@ -41,7 +41,7 @@ export default function Navbar() {
       if (isAtTop) {
         setScrollClasses("");
       } else {
-        setScrollClasses("shadow-xl brightness-105");
+        setScrollClasses("shadow-xl bg-primarylight");
       }
     };
 

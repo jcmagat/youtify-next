@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { TransferData } from "@/types/transfer";
+import { TransferData, Service } from "@/types/transfer";
 import useTransferSteps from "@/hooks/useTransferSteps";
 import SourceStep from "@/components/Transfer/SourceStep";
 import PlaylistStep from "@/components/Transfer/PlaylistStep";
@@ -8,8 +8,8 @@ import DestinationStep from "@/components/Transfer/DestinationStep";
 import ConfirmTransferStep from "@/components/Transfer/ConfirmTransferStep";
 
 const INITIAL_DATA: TransferData = {
-  source: "",
-  destination: "",
+  source: Service.None,
+  destination: Service.None,
   playlists: [],
 };
 
@@ -38,7 +38,7 @@ export default function Transfer() {
 
   return (
     <section id="home" className="w-full flex justify-center">
-      <div className="flex flex-col items-center gap-4 w-full max-w-5xl bg-green-300">
+      <div className="flex flex-col items-center gap-4 w-full max-w-5xl py-10 bg-primarylight rounded-3xl shadow-xl">
         <h1 className="text-5xl font-bold">{titles[currStepIndex]}</h1>
 
         <div className="flex gap-4">
@@ -48,10 +48,6 @@ export default function Transfer() {
         </div>
 
         {currStep}
-
-        {/*TODO: remove, only for testing*/}
-        <p>{data.source}</p>
-        <p>{data.destination}</p>
       </div>
     </section>
   );

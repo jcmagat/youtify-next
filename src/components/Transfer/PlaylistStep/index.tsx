@@ -19,7 +19,9 @@ export default function PlaylistStep({
   const [checkedTrackIds, setCheckedTrackIds] = useState<string[]>([]);
 
   useEffect(() => {
-    const getSpotifyPlaylists = async () => {
+    const getPlaylists = async () => {
+      if (!source) return;
+
       try {
         const res = await axios.get(
           `https://localhost:8080/playlists/${source}`,
@@ -34,7 +36,7 @@ export default function PlaylistStep({
       }
     };
 
-    getSpotifyPlaylists();
+    getPlaylists();
   }, []);
 
   const uniquePlaylistTrackId = (
@@ -88,7 +90,7 @@ export default function PlaylistStep({
   };
 
   return (
-    <div className="relative">
+    <div className="relative max-w-4xl">
       <PlaylistsList
         playlists={playlists}
         checkedPlaylistIds={checkedPlaylistIds}

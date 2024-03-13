@@ -9,6 +9,7 @@
 @layer base {
   :root {
     --color-primary: 210deg 40% 98%;
+    --color-primarylight: 210deg 40% 98%;
     --color-secondary: 217deg 32.6% 17.5%;
     --color-accent: 288deg 95.8% 90.6%;
   }
@@ -24,6 +25,7 @@
 
 :root[theme="dark"] {
   --color-primary: 217deg 32.6% 17.5%;
+  --color-primarylight: 217deg 32.6% 20.9%;
   --color-secondary: 210deg 40% 98%;
   --color-accent: 288deg 95.8% 60.6%;
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Playlist } from "@/types/transfer";
 
 type TracksListProps = {
+  collapsed: boolean;
   disabled: boolean;
   playlist: Playlist;
   checkedTrackIds: string[];
@@ -11,6 +12,7 @@ type TracksListProps = {
 };
 
 export default function TracksList({
+  collapsed,
   disabled,
   playlist,
   checkedTrackIds,
@@ -18,36 +20,39 @@ export default function TracksList({
   uniquePlaylistTrackId,
 }: TracksListProps) {
   return (
-    <ul
-      className={`flex flex-col gap-2 pt-2 
-        ${disabled ? "pointer-events-none brightness-75" : ""}`}
+    <div
+      className={`grid transition-all duration-200 ease-in-out
+      ${collapsed ? "grid-rows-[0fr]" : "grid-rows-[1fr]"}
+      ${disabled ? "pointer-events-none brightness-75" : ""}`}
     >
-      {playlist.tracks?.map((track) => (
-        <li key={track.id} className="flex items-center gap-6 pl-8">
-          <input
-            type="checkbox"
-            checked={checkedTrackIds.includes(
-              uniquePlaylistTrackId(playlist.id, track.id)
-            )}
-            onChange={() =>
-              handleTrackCheckboxChange(
+      <ul className="flex flex-col gap-2 pt-2 overflow-hidden">
+        {playlist.tracks?.map((track) => (
+          <li key={track.id} className="flex items-center gap-6 pl-8">
+            <input
+              type="checkbox"
+              checked={checkedTrackIds.includes(
                 uniquePlaylistTrackId(playlist.id, track.id)
-              )
-            }
-          />
-
-          {track.image && (
-            <Image
-              src={track.image}
-              alt={`${track.name} Image`}
-              width={64}
-              height={64}
+              )}
+              onChange={() =>
+                handleTrackCheckboxChange(
+                  uniquePlaylistTrackId(playlist.id, track.id)
+                )
+              }
             />
-          )}
 
-          <h1>{track.name}</h1>
-        </li>
-      ))}
-    </ul>
+            {track.image && (
+              <Image
+                src={track.image}
+                alt={`${track.name} Image`}
+                width={64}
+                height={64}
+              />
+            )}
+
+            <h1>{track.name}</h1>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
