@@ -1,12 +1,12 @@
 import Button from "@/components/Button";
 import axios from "axios";
-import { TransferData } from "@/types/transfer";
+import { TransferStepProps } from "@/types/transfer";
 
 export default function ConfirmTransferStep({
   source,
   destination,
   playlists,
-}: TransferData) {
+}: Omit<TransferStepProps, "updateData" | "stepForward">) {
   const transfer = async () => {
     if (!destination) return;
     if (!playlists || playlists.length === 0) return;

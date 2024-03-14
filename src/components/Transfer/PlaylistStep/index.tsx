@@ -2,17 +2,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "@/components/Button";
-import { Playlist, TransferData } from "@/types/transfer";
+import { Playlist, TransferStepProps } from "@/types/transfer";
 import PlaylistsList from "./PlaylistsList";
-
-type PlaylistStepProps = TransferData & {
-  updateData: (data: Partial<TransferData>) => void;
-};
 
 export default function PlaylistStep({
   source,
   updateData,
-}: PlaylistStepProps) {
+  stepForward,
+}: TransferStepProps) {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   const [checkedPlaylistIds, setCheckedPlaylistIds] = useState<string[]>([]);
@@ -87,10 +84,12 @@ export default function PlaylistStep({
           ),
         })),
     });
+
+    stepForward();
   };
 
   return (
-    <div className="relative max-w-4xl">
+    <div className="max-w-4xl">
       <PlaylistsList
         playlists={playlists}
         checkedPlaylistIds={checkedPlaylistIds}
@@ -101,7 +100,8 @@ export default function PlaylistStep({
       />
 
       <Button
-        className="fixed bottom-8 left-1/2 -translate-x-1/2"
+        className={`sticky bottom-16 left-1/2 -translate-x-1/2 mt-12 mb-6
+        ${!playlists || playlists.length === 0 ? "hidden" : ""}`}
         text="Select destination"
         onClick={handleButtonClick}
       />

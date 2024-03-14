@@ -3,19 +3,27 @@ import { ReactElement, useState } from "react";
 export default function useTransferSteps(steps: ReactElement[]) {
   const [currStepIndex, setCurrStepIndex] = useState(0);
 
-  const next = () => {
+  const titles = [
+    "Select the source",
+    "Select playlists",
+    "Select the destination",
+    "Transfer playlists",
+  ];
+
+  const stepForward = () => {
     setCurrStepIndex((i) => (i >= steps.length - 1 ? steps.length - 1 : i + 1));
   };
 
-  const back = () => {
+  const stepBack = () => {
     setCurrStepIndex((i) => (i <= 0 ? 0 : i - 1));
   };
 
   return {
     steps,
     currStepIndex,
+    currStepTitle: titles[currStepIndex],
     currStep: steps[currStepIndex],
-    next,
-    back,
+    stepForward,
+    stepBack,
   };
 }

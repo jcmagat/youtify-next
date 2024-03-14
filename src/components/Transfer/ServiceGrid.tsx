@@ -2,11 +2,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { TransferData, Service } from "@/types/transfer";
+import { TransferData, Service, TransferStepProps } from "@/types/transfer";
 
-type ServiceGridProps = Omit<TransferData, "playlists"> & {
+type ServiceGridProps = TransferStepProps & {
   updateKey: keyof Omit<TransferData, "playlists">;
-  updateData: (updatedData: Partial<TransferData>) => void;
 };
 
 type ServiceCardProps = ServiceGridProps & {
@@ -15,10 +14,11 @@ type ServiceCardProps = ServiceGridProps & {
 
 function ServiceCard({
   service,
+  updateKey,
   source,
   destination,
-  updateKey,
   updateData,
+  stepForward,
 }: ServiceCardProps) {
   const [isSource, setIsSource] = useState(false);
   const [isDestination, setIsDestination] = useState(false);
@@ -40,7 +40,7 @@ function ServiceCard({
       );
 
       // If already logged in, don't attempt to login again
-      if (status_res.data.is_logged_in) return;
+      if (status_res.data.is_logged_in) return stepForward();
 
       const login_res = await axios.get(
         `https://localhost:8080/oauth/${service}/login`,
@@ -56,6 +56,8 @@ function ServiceCard({
           "oauth",
           "popup=true,width=500,height=720"
         );
+
+      // ********** TODO: stepForward after successful login **********
     } catch (err) {
       console.error(err);
     }
@@ -70,7 +72,7 @@ function ServiceCard({
         className={`absolute left-1/2 -translate-x-1/2 text-xs leading-none select-none
         ${
           isSource || isDestination
-            ? "bg-secondary text-primary px-1 pb-1 rounded-b-md"
+            ? "bg-secondary text-primary px-2 pb-1 rounded-b-md"
             : ""
         }`}
       >

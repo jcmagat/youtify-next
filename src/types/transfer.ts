@@ -23,3 +23,8 @@ export type TransferData = {
   destination: Service;
   playlists: Playlist[];
 };
+
+export type TransferStepProps = TransferData & {
+  updateData: (data: Partial<TransferData>) => void;
+  stepForward: () => void;
+};

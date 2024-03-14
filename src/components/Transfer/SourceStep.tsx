@@ -1,21 +1,6 @@
 import ServiceGrid from "./ServiceGrid";
-import { TransferData } from "@/types/transfer";
+import { TransferStepProps } from "@/types/transfer";
 
-type SourceStepProps = TransferData & {
-  updateData: (data: Partial<TransferData>) => void;
-};
-
-export default function SourceStep({
-  source,
-  destination,
-  updateData,
-}: SourceStepProps) {
-  return (
-    <ServiceGrid
-      updateKey="source"
-      source={source}
-      destination={destination}
-      updateData={updateData}
-    />
-  );
+export default function SourceStep(props: TransferStepProps) {
+  return <ServiceGrid updateKey="source" {...props} />;
 }
