@@ -5,7 +5,7 @@ import Image from "next/image";
 import { TransferData, Service, TransferStepProps } from "@/types/transfer";
 
 type ServiceGridProps = TransferStepProps & {
-  updateKey: keyof Omit<TransferData, "playlists">;
+  step: keyof Omit<TransferData, "playlists">;
 };
 
 type ServiceCardProps = ServiceGridProps & {
@@ -14,7 +14,7 @@ type ServiceCardProps = ServiceGridProps & {
 
 function ServiceCard({
   service,
-  updateKey,
+  step,
   source,
   destination,
   updateData,
@@ -29,25 +29,23 @@ function ServiceCard({
   }, [service, source, destination]);
 
   const clickCard = async () => {
-    updateData({ [updateKey]: service });
+    if (step === "destination" && service === source) return;
+    if (step === "source" && destination !== Service.None)
+      updateData({ destination: Service.None });
+
+    updateData({ [step]: service });
 
     try {
-      const status_res = await axios.get(
-        `https://localhost:8080/oauth/${service}/status`,
-        {
-          withCredentials: true,
-        }
-      );
+      const status_res = await axios.get(`/api/oauth/${service}/status`, {
+        withCredentials: true,
+      });
 
       // If already logged in, don't attempt to login again
       if (status_res.data.is_logged_in) return stepForward();
 
-      const login_res = await axios.get(
-        `https://localhost:8080/oauth/${service}/login`,
-        {
-          withCredentials: true,
-        }
-      );
+      const login_res = await axios.get(`/api/oauth/${service}/login`, {
+        withCredentials: true,
+      });
 
       const auth_url = login_res.data.auth_url;
       if (auth_url)
@@ -81,7 +79,7 @@ function ServiceCard({
 
       <button
         className="flex justify-center items-center h-full w-full"
-        disabled={updateKey === "destination" && service === source}
+        disabled={step === "destination" && service === source}
         onClick={clickCard}
       >
         <Image

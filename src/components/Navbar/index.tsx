@@ -15,16 +15,13 @@ function Logo() {
 }
 
 export default function Navbar() {
-  // TODO: initialize with localStorage without error
-  const [theme, setTheme] = useState("");
+  const storedTheme =
+    typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+  const [theme, setTheme] = useState(storedTheme || "light");
 
   const toggleMode = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
-
-  useEffect(() => {
-    setTheme(localStorage.getItem("theme") ?? "");
-  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("theme", theme);

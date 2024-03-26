@@ -8,21 +8,25 @@ export default function ConfirmTransferStep({
   playlists,
 }: Omit<TransferStepProps, "updateData" | "stepForward">) {
   const transfer = async () => {
-    if (!destination) return;
+    if (!source || !destination || source === destination) return;
     if (!playlists || playlists.length === 0) return;
 
-    console.log(playlists);
-    const res = await axios.post(
-      `https://localhost:8080/playlists/${destination}/create`,
-      {
-        playlists: playlists,
-      },
-      {
-        withCredentials: true,
-      }
-    );
+    try {
+      const res = await axios.post(
+        `/api/playlists/${destination}/create`,
+        {
+          playlists: playlists,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-    console.log(res.data);
+      // TODO: show success
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

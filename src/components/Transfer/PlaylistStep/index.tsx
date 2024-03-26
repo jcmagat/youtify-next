@@ -20,12 +20,9 @@ export default function PlaylistStep({
       if (!source) return;
 
       try {
-        const res = await axios.get(
-          `https://localhost:8080/playlists/${source}`,
-          {
-            withCredentials: true,
-          }
-        );
+        const res = await axios.get(`/api/playlists/${source}`, {
+          withCredentials: true,
+        });
 
         setPlaylists(res.data.playlists);
       } catch (err) {

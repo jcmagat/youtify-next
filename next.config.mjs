@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -33,6 +37,14 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+  },
+  rewrites: async () => {
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${process.env.API_BASE_URL}/:path*`,
+      },
+    ];
   },
   reactStrictMode: false,
 };
