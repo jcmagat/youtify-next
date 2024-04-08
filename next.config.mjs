@@ -44,6 +44,10 @@ const nextConfig = {
         source: "/api/:path*",
         destination: `${process.env.API_BASE_URL}/:path*`,
       },
+      {
+        source: "/oauth/:path*",
+        destination: `${process.env.API_BASE_URL}/oauth/:path*`,
+      },
     ];
   },
   reactStrictMode: false,
