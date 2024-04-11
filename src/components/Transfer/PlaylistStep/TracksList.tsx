@@ -26,8 +26,11 @@ export default function TracksList({
       ${disabled ? "pointer-events-none brightness-75" : ""}`}
     >
       <ul className="flex flex-col gap-2 pt-2 overflow-hidden">
-        {playlist.tracks?.map((track) => (
-          <li key={track.id} className="flex items-center gap-6 pl-8">
+        {playlist.tracks?.map((track, index) => (
+          <li
+            key={`${track.id}-${index}`}
+            className="flex items-center gap-6 pl-8"
+          >
             <input
               type="checkbox"
               checked={checkedTrackIds.includes(
