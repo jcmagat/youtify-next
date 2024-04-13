@@ -51,9 +51,9 @@ export default function Faq() {
       <div className="flex flex-col gap-6 bg-secondary text-primary max-w-5xl px-12 py-10 rounded-3xl">
         <h1 className="font-bold text-5xl">Frequently Asked Questions</h1>
         <p>
-          Welcome to our help center. Here you can find answers for questions
+          {`Welcome to our help center. Here you can find answers for questions
           you may have about our service. If you don't find your answer here,
-          feel free to contact us.
+          feel free to contact us.`}
         </p>
 
         {Object.entries(faqs).map(([question, answer], index) => (
