@@ -2,14 +2,13 @@
 import { useState, useEffect } from "react";
 import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
-
 import Link from "next/link";
+import Image from "next/image";
 
 function Logo() {
   return (
     <Link href="/" className="flex gap-2">
-      <div>Logo</div>
-      <div>YouTify</div>
+      <Image src={"/assets/logo.svg"} alt={"logo"} height={46} width={46 * 3} />
     </Link>
   );
 }
@@ -38,7 +37,7 @@ export default function Navbar() {
       if (isAtTop) {
         setScrollClasses("");
       } else {
-        setScrollClasses("shadow-xl bg-primarylight");
+        setScrollClasses("shadow-xl bg-secondary");
       }
     };
 
@@ -53,7 +52,7 @@ export default function Navbar() {
   return (
     <header>
       <nav
-        className={`bg-primary text-secondary fixed w-full h-24 z-20 ${scrollClasses}`}
+        className={`bg-primary text-text fixed w-full h-24 z-20 ${scrollClasses}`}
       >
         <div className="flex justify-between items-center h-full w-full px-8 2xl:px-16">
           <Logo />

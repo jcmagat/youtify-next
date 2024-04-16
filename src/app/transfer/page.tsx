@@ -78,8 +78,8 @@ export default function Transfer() {
   }, [currStepIndex, data.source, data.playlists, data.destination]);
 
   return (
-    <section id="home" className="w-full flex justify-center min-h-[75vh]">
-      <div className="flex flex-col items-center gap-4 w-full max-w-5xl py-10 bg-primarylight rounded-3xl shadow-xl">
+    <section id="transfer" className="w-full flex justify-center min-h-[75vh]">
+      <div className="flex flex-col items-center gap-4 w-full max-w-5xl py-10 bg-secondary rounded-3xl shadow-xl">
         <h1 className="text-5xl font-bold">{currStepTitle}</h1>
 
         <div className="flex gap-4">

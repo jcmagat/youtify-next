@@ -10,8 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: "hsl(var(--color-primary) / <alpha-value>)",
-        primarylight: "hsl(var(--color-primarylight) / <alpha-value>)",
         secondary: "hsl(var(--color-secondary) / <alpha-value>)",
+        text: "hsl(var(--color-text) / <alpha-value>)",
+        textInverted: "hsl(var(--color-textInverted) / <alpha-value>)",
         accent: "hsl(var(--color-accent) / <alpha-value>)",
       },
     },

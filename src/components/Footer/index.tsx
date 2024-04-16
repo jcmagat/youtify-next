@@ -4,7 +4,7 @@ import { FaLinkedin } from "react-icons/fa6";
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary text-primary flex flex-col items-center justify-between h-96 pt-8 sm:pt-16">
+    <footer className="bg-secondary flex flex-col items-center justify-between h-96 pt-8 sm:pt-16">
       <div className="flex flex-col sm:flex-row gap-8 justify-between w-full max-w-4xl px-4 sm:px-8 py-16">
         <div className="flex flex-col items-start">
           <h1>Developed by Juan Carlo Magat</h1>
@@ -63,7 +63,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="bg-primary text-secondary w-full text-sm py-2 text-center">
+      <div className="bg-primary w-full text-sm py-2 text-center">
         <p>Copyright © 2024 YouTify. All Rights Reserved</p>
       </div>
     </footer>

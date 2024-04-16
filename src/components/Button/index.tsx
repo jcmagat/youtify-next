@@ -10,7 +10,7 @@ type ButtonProps = {
 export default function Button(props: ButtonProps) {
   const { className, text, href, onClick } = props;
 
-  let buttonClass = `bg-secondary text-primary px-8 py-4 text-lg leading-none rounded-full ${className}`;
+  let buttonClass = `bg-accent text-textInverted px-8 py-4 text-lg leading-none rounded-full ${className}`;
 
   if (href) {
     return (
