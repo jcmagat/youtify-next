@@ -16,7 +16,7 @@
   }
 }
 
-:root[theme="dark"] {
+:root[data-theme="dark"] {
   --color-primary: 216deg 8% 12%;
   --color-secondary: 210deg 3% 15%;
   --color-text: 216deg 14% 93%;

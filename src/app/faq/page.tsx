@@ -48,7 +48,7 @@ export default function Faq() {
 
   return (
     <section id="faq" className="w-full flex justify-center min-h-[75vh]">
-      <div className="flex flex-col gap-6 bg-secondary text-primary max-w-5xl px-12 py-10 rounded-3xl">
+      <div className="flex flex-col gap-6 bg-secondary max-w-5xl px-12 py-10 rounded-3xl">
         <h1 className="font-bold text-5xl">Frequently Asked Questions</h1>
         <p>
           {`Welcome to our help center. Here you can find answers for questions

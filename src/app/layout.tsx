@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Providers from "./providers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-primary text-text`}>
-        <Navbar />
-        <main className="py-32 min-h-[80vh]">{children}</main>
-        <Footer />
+        <Providers>
+          <Navbar />
+          <main className="py-32 min-h-[80vh]">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
