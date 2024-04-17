@@ -6,14 +6,6 @@ import { MdLightMode } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
 
-function Logo() {
-  return (
-    <Link href="/" className="flex gap-2">
-      <Image src={"/assets/logo.svg"} alt={"logo"} height={46} width={46 * 3} />
-    </Link>
-  );
-}
-
 export default function Navbar() {
   const { setTheme, resolvedTheme } = useTheme();
 
@@ -53,7 +45,15 @@ export default function Navbar() {
         className={`bg-primary text-text fixed w-full h-24 z-20 ${scrollClasses}`}
       >
         <div className="flex justify-between items-center h-full w-full px-8 2xl:px-16">
-          <Logo />
+          <Link href="/" className="relative w-32 h-full">
+            <Image
+              priority
+              fill
+              src={"/assets/logo.svg"}
+              alt={"logo"}
+              sizes="128px"
+            />
+          </Link>
 
           <ul className="flex gap-16">
             <Link href="/transfer">
