@@ -44,12 +44,15 @@ export default function TracksList({
             />
 
             {track.image && (
-              <Image
-                src={track.image}
-                alt={`${track.name} Image`}
-                width={64}
-                height={64}
-              />
+              <div className="relative h-16 w-16 shrink-0 overflow-hidden">
+                <Image
+                  fill
+                  src={track.image}
+                  alt={`${track.name} Image`}
+                  sizes="200px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
             )}
 
             <h1>{track.name}</h1>

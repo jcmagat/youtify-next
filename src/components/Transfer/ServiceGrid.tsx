@@ -62,34 +62,27 @@ function ServiceCard({
   };
 
   return (
-    <div
-      className={`relative h-36 w-36 rounded-3xl shadow-lg overflow-hidden
-      ${isSource || isDestination ? "border-4 border-secondary" : ""}`}
+    <button
+      className={`relative h-36 w-36 rounded-3xl shadow-lg overflow-hidden bg-primary
+        ${isSource || isDestination ? "border-4 border-accent" : ""}`}
+      disabled={step === "destination" && service === source}
+      onClick={clickCard}
     >
       <h1
-        className={`absolute left-1/2 -translate-x-1/2 text-xs leading-none select-none
+        className={`absolute left-1/2 -translate-x-1/2 text-xs leading-none select-none z-10
         ${
           isSource || isDestination
-            ? "bg-secondary text-primary px-2 pb-1 rounded-b-md"
+            ? "bg-accent text-primary px-2 pb-1 rounded-b-md"
             : ""
         }`}
       >
         {isSource ? "Source" : isDestination ? "Destination" : ""}
       </h1>
 
-      <button
-        className="flex justify-center items-center h-full w-full"
-        disabled={step === "destination" && service === source}
-        onClick={clickCard}
-      >
-        <Image
-          src={`/assets/${service}.svg`}
-          alt={`${service} logo`}
-          height={34}
-          width={34 * (559 / 168)}
-        />
-      </button>
-    </div>
+      <div className="relative h-full w-28 left-1/2 -translate-x-1/2">
+        <Image src={`/assets/${service}.svg`} alt={`${service} logo`} fill />
+      </div>
+    </button>
   );
 }
 

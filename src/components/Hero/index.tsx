@@ -9,19 +9,13 @@ export default function Hero() {
           Have Full Control Over Your Music Playlists
         </h1>
 
-        <div className="flex gap-6">
-          <Image
-            src={"/assets/spotify.svg"}
-            alt="spotify"
-            height={30}
-            width={30 * (559 / 168)}
-          />
-          <Image
-            src={"/assets/youtube.svg"}
-            alt="youtube"
-            height={22}
-            width={22 * (512 / 114)}
-          />
+        <div className="flex gap-6 min-h-10">
+          <div className="relative w-28">
+            <Image fill src={"/assets/spotify.svg"} alt="spotify" />
+          </div>
+          <div className="relative w-28">
+            <Image fill src={"/assets/youtube.svg"} alt="youtube" />
+          </div>
         </div>
 
         <p className="max-w-xl">

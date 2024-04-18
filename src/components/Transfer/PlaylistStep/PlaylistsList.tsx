@@ -50,12 +50,15 @@ export default function PlaylistsList({
             />
 
             {playlist.image && (
-              <Image
-                src={playlist.image}
-                alt={`${playlist.name} Image`}
-                width={64}
-                height={64}
-              />
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden">
+                <Image
+                  fill
+                  src={playlist.image}
+                  alt={`${playlist.name} Image`}
+                  sizes="200px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
             )}
 
             <div className="flex justify-between w-full">
