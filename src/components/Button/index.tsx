@@ -4,11 +4,12 @@ type ButtonProps = {
   className?: string;
   text?: string;
   href?: string;
+  type?: "button" | "submit" | "reset";
   onClick?: () => void;
 };
 
 export default function Button(props: ButtonProps) {
-  const { className, text, href, onClick } = props;
+  const { className, text, href, type, onClick } = props;
 
   let buttonClass = `bg-accent text-textInverted px-8 py-4 text-lg leading-none rounded-full ${className}`;
 
@@ -21,7 +22,7 @@ export default function Button(props: ButtonProps) {
   }
 
   return (
-    <button className={buttonClass} onClick={onClick}>
+    <button className={buttonClass} type={type} onClick={onClick}>
       {text}
     </button>
   );
