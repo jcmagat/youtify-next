@@ -33,7 +33,7 @@ export default function Navbar() {
         className={`bg-primary text-text fixed w-full h-24 z-20 ${scrollClasses}`}
       >
         <div className="flex justify-between items-center h-full w-full px-8 2xl:px-16">
-          <Link href="/" className="relative w-32 h-full shrink-0">
+          <Link href="/" className="relative w-32 h-full shrink-0 z-20">
             <Image
               priority
               fill

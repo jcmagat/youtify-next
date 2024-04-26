@@ -15,7 +15,17 @@ export default function ThemeButton() {
 
   return (
     <button onClick={toggleMode}>
-      {resolvedTheme === "light" ? <MdDarkMode /> : <MdLightMode />}
+      <ThemeIcon />
     </button>
   );
+}
+
+function ThemeIcon() {
+  const { resolvedTheme } = useTheme();
+
+  if (resolvedTheme === "light") {
+    return <MdDarkMode className="text-xl" />;
+  } else {
+    return <MdLightMode className="text-xl" />;
+  }
 }
