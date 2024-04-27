@@ -21,32 +21,42 @@ function LargeScreenMenu() {
     <div className="hidden md:block">
       <ul className="flex gap-16">
         <li
-          className="font-bold hover:border-b hover:border-accent"
+          className="relative border-b-2 border-transparent hover:border-accent"
           onMouseEnter={() => setIsFeaturesOpen(true)}
           onMouseLeave={() => setIsFeaturesOpen(false)}
         >
-          Features
+          <h2 className="font-bold text-lg">Features</h2>
+
           {isFeaturesOpen && (
-            <div className="fixed bg-blue-100">
+            <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 shadow-md">
               <ul>
-                <li>Transfer</li>
-                <li>Export</li>
+                <li className="font-bold border-b border-transparent hover:border-accent">
+                  <Link href="/transfer">Transfer</Link>
+                </li>
+                <li className="font-bold border-b border-transparent hover:border-accent">
+                  <Link href="/export">Export</Link>
+                </li>
               </ul>
             </div>
           )}
         </li>
 
         <li
-          className="font-bold hover:border-b hover:border-accent"
+          className="relative border-b-2 border-transparent hover:border-accent"
           onMouseEnter={() => setIsHelpOpen(true)}
           onMouseLeave={() => setIsHelpOpen(false)}
         >
-          Help
+          <h2 className="font-bold text-lg">Help</h2>
+
           {isHelpOpen && (
-            <div className="fixed bg-blue-100">
+            <div className="absolute left-1/2 -translate-x-1/2 px-4 py-2 shadow-md">
               <ul>
-                <li>FAQs</li>
-                <li>Contact</li>
+                <li className="font-bold border-b border-transparent hover:border-accent">
+                  <Link href="/faq">FAQs</Link>
+                </li>
+                <li className="font-bold border-b border-transparent hover:border-accent">
+                  <Link href="/contact">Contact</Link>
+                </li>
               </ul>
             </div>
           )}
@@ -72,13 +82,13 @@ function SmallScreenMenu() {
         <ul className="mt-24 ml-16">
           <h1 className="font-bold text-2xl mb-2">Features</h1>
           <li
-            className="w-fit font-bold hover:border-b hover:border-accent"
+            className="w-fit font-bold border-b border-transparent hover:border-accent"
             onClick={() => setIsOpen(false)}
           >
             <Link href="/transfer">Transfer</Link>
           </li>
           <li
-            className="w-fit font-bold hover:border-b hover:border-accent"
+            className="w-fit font-bold border-b border-transparent hover:border-accent"
             onClick={() => setIsOpen(false)}
           >
             <Link href="/export">Export</Link>
@@ -86,13 +96,13 @@ function SmallScreenMenu() {
 
           <h1 className="font-bold text-2xl mt-8 mb-2">Help</h1>
           <li
-            className="w-fit font-bold hover:border-b hover:border-accent"
+            className="w-fit font-bold border-b border-transparent hover:border-accent"
             onClick={() => setIsOpen(false)}
           >
             <Link href="/faq">FAQs</Link>
           </li>
           <li
-            className="w-fit font-bold hover:border-b hover:border-accent"
+            className="w-fit font-bold border-b border-transparent hover:border-accent"
             onClick={() => setIsOpen(false)}
           >
             <Link href="/contact">Contact</Link>
